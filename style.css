@@ -10,6 +10,7 @@ div.interface{
     border-radius: 10px;
     width: 60%;
     padding-bottom: 400px;
+    flex-direction: column;
 }
 input[type=button]{
     padding: 10px;
