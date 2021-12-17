@@ -1,0 +1,28 @@
+body{
+    background-color: blue;
+}
+div.interface{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+    background-color: white;
+    border-radius: 10px;
+    width: 60%;
+    padding-bottom: 400px;
+}
+input[type=button]{
+    padding: 10px;
+    color: white;
+    margin-left: 20px;
+    background-color: blue;
+    border-radius: none;
+}
+input{
+    margin-top: 200px;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
