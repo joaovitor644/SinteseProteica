@@ -1,3 +1,4 @@
+
 function procesing() {
   var saida = document.getElementById("saida");
 
@@ -135,6 +136,45 @@ function procesing() {
         console.log("certo");
         break;
       }
+function procesing(){
+    var saida = document.getElementById("saida")
+
+    var helice = document.getElementById("dna")
+    var dna = helice.value.toUpperCase()
+    var rna = '';
+    var codon = []
+    var proteina = [];
+    var status;
+    var getCodon = '';
+    var codonPause = 0;
+    var statusOutPut;
+    //contadores
+    var i = 0;
+    var j = 0;
+    var k = 0;
+    var n = 0;
+    var t = 0;
+
+    //Aminoácidos
+    var groupU = {
+        "UUU": "FEN",
+        "UUC": "FEN",
+
+        "UUA": "LEU",
+        "UUG": "LEU",
+
+        "UCU": "SER",
+        "UCC": "SER",
+        "UCA": "SER",
+        "UCG": "SER",
+
+        "UAU": "TIR",
+        "UAR": "TIR",
+
+        "UGU": "CIS",
+        "UGC": "CIS",
+
+        "UGG": "TRP"
     }
   }
   if (status == true) {
@@ -184,15 +224,29 @@ function procesing() {
   while (t < codon.length) {
     if (codon[t] == undefined) {
       break;
+    while(j <= dna.length){
+        if(dna[j] != "A" && dna[j] != "C" && dna[j] != "G" && dna[j] != "T" ){
+            status = false;
+            window.alert("erro")
+            statusOutPut = false
+            break;
+           
+        }
+        else{
+            j++
+            if(j == dna.length){
+                status = true;
+                console.log("certo")
+                break;
+            } 
+        }
     }
     if (codon[t] == "UAA" || codon[t] == "UGA" || codon[t] == "UAG") {
       if (t == 0) {
         errorText = document.createTextNode("Rna inválido!");
         errorMessage.appendChild(errorText);
         interface.appendChild(errorMessage);
-
         locationRealod();
-
         //window.alert("rna inválido");
         break;
       }
@@ -223,11 +277,45 @@ function procesing() {
       case "C":
         proteina[t] = groupC[codon[t]];
         t++;
+    if(codon[t] == "UAA" || codon[t] == "UGA" || codon[t] == "UAG"){
+        if(t == 0){
+            window.alert("rna inválido");
+            statusOutPut = false
+            break;
+        }
         break;
     }
+    else if(rna.length % 3 == 1){
+        window.alert("rna inválido")
+        statusOutPut = false
+        break;
+    } else {
+        statusOutPut = true
+    }
+
   }
 
-  var output =
+
+    switch(codon[t][0]){
+        case "G":
+            proteina[t] = groupG[codon[t]];
+            t++
+            break;
+        case "A":
+            proteina[t] = groupA[codon[t]];
+            t++
+            break;
+        case "U":
+            proteina[t] = groupU[codon[t]];
+            t++
+            break;
+        case "C":
+            proteina[t] = groupC[codon[t]];
+            t++;
+            break;
+    }
+    if(statusOutPut){  
+      var output =
     "<p> DNA  => &nbsp;&nbsp;" +
     dna +
     "</p>" +
@@ -243,10 +331,12 @@ function procesing() {
     "Aminoácidos => " +
     proteina.join(" - ") +
     "</p>";
+        saida.innerHTML = output ;
+    } else {
+        saida.innerHTML = "Erro, Cadeia de bases nitrogenadas inválida"
+    }
+    
+}
 
-  saida.innerHTML = output;
-  console.log("Proteína => " + proteina);
-  console.log("RNAm => " + rna);
-  console.log("Qunatidade de nucleotídeos => " + dna.length);
-  console.log("Códon => " + codon);
+
 }
