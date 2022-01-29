@@ -9,7 +9,7 @@ function procesing(){
     var status;
     var getCodon = '';
     var codonPause = 0;
-
+    var statusOutPut;
     //contadores
     var i = 0;
     var j = 0;
@@ -110,6 +110,7 @@ function procesing(){
         if(dna[j] != "A" && dna[j] != "C" && dna[j] != "G" && dna[j] != "T" ){
             status = false;
             window.alert("erro")
+            statusOutPut = false
             break;
            
         }
@@ -178,13 +179,17 @@ while(t < codon.length){
     if(codon[t] == "UAA" || codon[t] == "UGA" || codon[t] == "UAG"){
         if(t == 0){
             window.alert("rna inválido");
+            statusOutPut = false
             break;
         }
         break;
     }
     else if(rna.length % 3 == 1){
         window.alert("rna inválido")
+        statusOutPut = false
         break;
+    } else {
+        statusOutPut = true
     }
     switch(codon[t][0]){
         case "G":
@@ -204,12 +209,18 @@ while(t < codon.length){
             t++;
             break;
     }
+    if(statusOutPut){
+        var output = "<p> DNA  => &nbsp;&nbsp;"+dna + "</p>"+ " <p>" + "RNAm => "+rna +"</p>"+"<p>" + "Códon => "+ codon.join(' - ') + "</p>"+ "<p>" +"Aminoácidos => "+proteina.join(" - ") + "</p>"
+        saida.innerHTML = output ;
+    } else {
+        saida.innerHTML = "Erro, Cadeia de bases nitrogenadas inválida"
+    }
     
 }
 
-var output = "<p> DNA  => &nbsp;&nbsp;"+dna + "</p>"+ " <p>" + "RNAm => "+rna +"</p>"+"<p>" + "Códon => "+ codon.join(' - ') + "</p>"+ "<p>" +"Aminoácidos => "+proteina.join(" - ") + "</p>"
 
-saida.innerHTML = output ;
+
+
 console.log("Proteína => "+proteina)
 console.log("RNAm => "+rna);
 console.log("Qunatidade de nucleotídeos => "+dna.length)
