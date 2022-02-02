@@ -1,14 +1,18 @@
 function procesing(){
-  var saida = document.getElementById("saida")
-
-  var helice = document.getElementById("dna")
-  var dna = helice.value.toUpperCase()
+  const saida = document.getElementById("saida")
+  const saida2 = document.getElementById("saida2")
+  const codon_output = document.getElementById("Códon")
+  const amino_output = document.getElementById("Aminoacido")
+  const output2 = document.getElementById("output2");
+  const helice = document.getElementById("dna")
+  const dna = helice.value.toUpperCase()
   var rna = '';
   var codon = []
   var proteina = [];
   var status;
   var getCodon = '';
   var codonPause = 0;
+  var codonBreak;
   var statusOutPut;
   //contadores
   var i = 0;
@@ -37,6 +41,7 @@ function procesing(){
       "UGC": "CIS",
 
       "UGG": "TRP"
+
   }
   var groupC = {
       "CUU": "LEU",
@@ -114,7 +119,11 @@ function procesing(){
           break;
          
       }
-      else{
+      else if(dna.length < 3){
+        saida.innerHTML = "<p>Erro no DNA , Cadeia não possui no mínimo 3 Bases Nitrogenadas</p>";
+        status = false;
+        break;
+      } else{
           j++
           if(j == dna.length){
               status = true;
@@ -162,6 +171,7 @@ function procesing(){
       while(codon[m]){
           if(codon[m] == "UGA" || codon[m] == "UAG" || codon[m] == "UAA"){
               console.log("existe códon de parada")
+              codonBreak = true
               break;
           } 
           else {
@@ -182,12 +192,12 @@ while(t < codon.length){
           break;
       }
       break;
-  } else if(rna.length % 3 == 1){
-    saida.innerHTML = "Erro no DNA , Falta duas Bases nitrogenadas para completar um códom";
+  } else if(rna.length % 3 == 1 && codonBreak == false){
+    saida.innerHTML = "<p>Erro no DNA , Falta duas Bases nitrogenadas para completar um códom</p>";
     statusOutPut = false
     break;
-} else if(rna.length % 3 == 2){
-    saida.innerHTML = "Erro no DNA , Falta uma Bases nitrogenadas para completar um códom";
+} else if(rna.length % 3 == 2 && codonBreak == false){
+    saida.innerHTML = "<p>Erro no DNA , Falta uma Bases nitrogenadas para completar um códom</p>";
     statusOutPut = false
     break; 
 } else {
@@ -212,10 +222,42 @@ while(t < codon.length){
           break;
   }
   if(statusOutPut){
-      var output = "<p> DNA  => &nbsp;&nbsp;"+dna + "</p>"+ " <p>" + "RNAm => "+rna +"</p>"+"<p>" + "Códon => "+ codon.join(' - ') + "</p>"+ "<p>" +"Aminoácidos => "+proteina.join(" - ") + "</p>"
-      saida.innerHTML = output ;
+        saida.setAttribute("style","display:block;")
+        output2.setAttribute("style","display:block;")
+        amino_output.innerHTML = ""
+        codon_output.innerHTML = "" 
+        saida2.innerHTML = ""
+        amino_output.innerHTML = proteina;
+        let index = 0 
+        var s = 0
+
+        while(codon[s]){
+            if(codon[s] == "UAA" || codon[s] == "UGA" || codon[s] == "UAG"){
+                codon_output.innerHTML += `<span class='codon_pause'>"${codon[s]}</span> - `;
+                s++
+            } else {
+               codon_output.innerHTML += `${codon[s]} - `;
+                s++ 
+            }  
+        }
+        while(dna[index] && rna[index]) {  
+            if(index % 3 == 0){
+                saida2.innerHTML += "<hr style='width:100%;'>"
+            }
+            saida2.innerHTML += `<p>${dna[index]} ---------- ${rna[index]}</p>`
+          
+            index++
+        }
+       
+        console.log(dna)
+        console.log(codon)
+        console.log(rna)
+        console.log(proteina)
+        
+       // document.querySelector(".interface").setAttribute("style","height:auto;")
+       
   } else {
-      saida.innerHTML = "Erro, Cadeia de bases nitrogenadas inválida"
+      saida.innerHTML = "Erro, Cadeia de bases nitrogenadas inválida";
   }
   
 }
