@@ -10,13 +10,22 @@
 <body>
     <div class="container">
         <div class="interface">
-            <input type="text" id="dna" >
-            <input type="button" onclick="procesing()" value="Sintetizar"> 
-            <div id="saida">
-        
+            <div class="container2">
+                <input type="text" id="dna" >
+                <input type="button" onclick="procesing()" value="Sintetizar"> 
+                <div id="saida" style="display: none;">
+                    <p>Códon:</p><p id="Códon"></p>
+                    <p>Aminoácido:</p><p id="Aminoacido"></p>
+                </div> 
+                <div style="margin-top: 100px;display: none;" id="output2">
+                    <p>DNA ---- RNA</p>
+                    <div id="saida2">
+
+                    </div>
+                </div>                       
             </div>
         </div>
-       
+        <div class="divError">Teste</div>
     </div>
     
     <script src="main.js"></script>
